@@ -13,8 +13,6 @@ from load_LINEMOD import load_LINEMOD_data
 from criteria.clip_loss import CLIPLoss
 import clip
 import kornia
-import cv2
-
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -807,15 +805,9 @@ def train():
         rgb_img = rgb.view(sample_scale, sample_scale, -1)
         target = target_s.view(sample_scale, sample_scale, -1)
         rgb_img = rgb_img.permute(2,0,1).unsqueeze(0)
-        # rgb_img_gray = kornia.rgb_to_grayscale(rgb_img)
-
-        # image = cv2.imread(image_path)
-        rgb_img_gray = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2GRAY)
-
+        rgb_img_gray = kornia.color.rgb_to_grayscale(rgb_img)
         target_img = target.permute(2,0,1).unsqueeze(0)
-        # target_img_gray = kornia.rgb_to_grayscale(target_img)
-
-        target_img_gray = cv2.cvtColor(target_img, cv2.COLOR_BGR2GRAY)
+        target_img_gray = kornia.color.rgb_to_grayscale(target_img)
 
         optimizer.zero_grad()
 
@@ -826,11 +818,7 @@ def train():
         if 'rgb0' in extras:
             rgb0_img = extras['rgb0'].view(sample_scale, sample_scale, -1)
             rgb0_img = rgb0_img.permute(2,0,1).unsqueeze(0)
-            # rgb0_img_gray = kornia.rgb_to_grayscale(rgb0_img)
-
-            rgb0_img_gray = cv2.cvtColor(rgb0_img, cv2.COLOR_BGR2GRAY)
-
-
+            rgb0_img_gray = kornia.color.rgb_to_grayscale(rgb0_img)
             img_loss0 = img2mse(rgb0_img_gray, target_img_gray)
             loss = loss + img_loss0
 
