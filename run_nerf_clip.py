@@ -637,6 +637,7 @@ def train():
             images = images[...,:3]
 
         plotImage(images[0])
+        print(images[0])
 
     elif args.dataset_type == 'LINEMOD':
         images, poses, render_poses, hwf, K, i_split, near, far = load_LINEMOD_data(args.datadir, args.half_res, args.testskip)
@@ -758,7 +759,7 @@ def train():
 
 
     # N_iters = 210000 + 1
-    N_iters = 300 + 1
+    N_iters = 350 + 1
 
     print('Begin')
     print('TRAIN views are', i_train)
