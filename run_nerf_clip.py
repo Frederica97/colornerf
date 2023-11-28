@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 
 def plotImage(img, savedir):
     # rgb8 = to8b(rgbs[-1])
-    filename = os.path.join(savedir, '{:03d}.png'.format(i))
+    filename = os.path.join(savedir, 'init.png')
     imageio.imwrite(filename, img)
     print('initial image')
 
