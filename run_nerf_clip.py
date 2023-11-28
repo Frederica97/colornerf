@@ -19,10 +19,9 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 def plotImage(img):
+    print("plot image")
     plt.imshow(img)
     plt.show()
-
-
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 np.random.seed(0)
