@@ -2,7 +2,7 @@ expname = blender_paper_lego
 basedir = ./logs
 datadir = ./data/nerf_synthetic/lego
 dataset_type = blender
-ft_path = .checkpoint/2000000.tar
+ft_path = .checkpoint/lego_test/200000.tar
 
 no_batching = True
 
