@@ -19,13 +19,9 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 def plotImage(img):
-
-    fig, axs = plt.subplots(1, 1, figsize=(10, 10))
-
-    axs[i].imshow(img)
-    axs[i].axis('off')
-
+    plt.imshow(img)
     plt.show()
+
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
