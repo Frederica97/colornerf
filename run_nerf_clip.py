@@ -257,16 +257,14 @@ def create_nerf(args):
     ##########################
 
     # Load checkpoints
-    # if args.ft_path is not None and args.ft_path!='None':
-    #     ckpts = [args.ft_path]
-    # else:
-    #     ckpts = [os.path.join(basedir, expname, f) for f in sorted(os.listdir(os.path.join(basedir, expname))) if 'tar' in f]
+    if args.ft_path is not None and args.ft_path!='None':
+        ckpts = [args.ft_path]
+    else:
+        ckpts = [os.path.join(basedir, expname, f) for f in sorted(os.listdir(os.path.join(basedir, expname))) if 'tar' in f]
 
-    # print('Found ckpts', ckpts)
-    ckpts = [3]
+    print('Found ckpts', ckpts)
     if len(ckpts) > 0 and not args.no_reload:
-        # ckpt_path = ckpts[-1]
-        ckpt_path = ".checkpoint/lego_test/200000.tar"
+        ckpt_path = ckpts[-1]
         print('Reloading from', ckpt_path)
         ckpt = torch.load(ckpt_path)
 
