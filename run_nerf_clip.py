@@ -18,10 +18,12 @@ import kornia
 from PIL import Image
 import matplotlib.pyplot as plt
 
-def plotImage(img):
-    print("plot image")
-    plt.imshow(img)
-    plt.show()
+def plotImage(img, savedir):
+    rgb8 = to8b(rgbs[-1])
+    filename = os.path.join(savedir, '{:03d}.png'.format(i))
+    imageio.imwrite(filename, rgb8)
+    print('initial image')
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 np.random.seed(0)
@@ -566,13 +568,13 @@ def config_parser():
                         help='will take every 1/N images as LLFF test set, paper uses 8')
 
     # logging/saving options
-    parser.add_argument("--i_print",   type=int, default=50,
+    parser.add_argument("--i_print",   type=int, default=100,
                         help='frequency of console printout and metric loggin')
     parser.add_argument("--i_img",     type=int, default=200,
                         help='frequency of tensorboard image logging')
     parser.add_argument("--i_weights", type=int, default=200,
                         help='frequency of weight ckpt saving')
-    parser.add_argument("--i_testset", type=int, default=50,
+    parser.add_argument("--i_testset", type=int, default=100,
                         help='frequency of testset saving')
     parser.add_argument("--i_video",   type=int, default=200,
                         help='frequency of render_poses video saving')
@@ -636,7 +638,7 @@ def train():
         else:
             images = images[...,:3]
 
-        plotImage(images[0])
+        plotImage(images[0], os.path.join("./logs"))
         print(images[0])
 
     elif args.dataset_type == 'LINEMOD':
