@@ -18,11 +18,9 @@ import kornia
 from PIL import Image
 import matplotlib.pyplot as plt
 
-def plotImage(img, savedir):
-    # rgb8 = to8b(rgbs[-1])
-    filename = os.path.join(savedir, 'init.png')
-    imageio.imwrite(filename, img)
-    print('initial image')
+def plotImage(img):
+    img = np.array(img)
+    return np.mean(img) > 240
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -638,7 +636,7 @@ def train():
         else:
             images = images[...,:3]
 
-        plotImage(images[0], os.path.join("./logs"))
+        print(plotImage(images[0]))
         print(images[0])
 
     elif args.dataset_type == 'LINEMOD':
