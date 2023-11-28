@@ -22,8 +22,10 @@ DEBUG = False
 from math import sqrt, exp
 def get_select_inds(N_samples, iterations, random_scale=True, random_shift=True):
     N_samples_sqrt = int(sqrt(N_samples))
-    w, h = torch.meshgrid([torch.linspace(-1, 1, N_samples_sqrt),
-                                     torch.linspace(-1, 1, N_samples_sqrt)])
+    # w, h = torch.meshgrid([torch.linspace(-1, 1, N_samples_sqrt),
+    #                                  torch.linspace(-1, 1, N_samples_sqrt)])
+    w, h = torch.meshgrid([torch.linspace(-1, 1, N_samples_sqrt), torch.linspace(-1, 1, N_samples_sqrt)], indexing='xy')
+
     h = h.unsqueeze(2)
     w = w.unsqueeze(2)
 
@@ -267,7 +269,7 @@ def create_nerf(args):
 
         start = ckpt['global_step']
         # use new optimizer .............
-        #optimizer.load_state_dict(ckpt['optimizer_state_dict'])
+        optimizer.load_state_dict(ckpt['optimizer_state_dict'])
 
         # Load model
         model.load_state_dict(ckpt['network_fn_state_dict'])
@@ -745,7 +747,7 @@ def train():
 
 
     # N_iters = 210000 + 1
-    N_iters = 601 + 1
+    N_iters = 20 + 1
 
     print('Begin')
     print('TRAIN views are', i_train)
