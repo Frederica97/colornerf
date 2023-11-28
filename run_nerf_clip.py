@@ -269,7 +269,7 @@ def create_nerf(args):
 
         start = ckpt['global_step']
         # use new optimizer .............
-        optimizer.load_state_dict(ckpt['optimizer_state_dict'])
+        # optimizer.load_state_dict(ckpt['optimizer_state_dict'])
 
         # Load model
         model.load_state_dict(ckpt['network_fn_state_dict'])
