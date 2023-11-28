@@ -19,9 +19,9 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 def plotImage(img, savedir):
-    rgb8 = to8b(rgbs[-1])
+    # rgb8 = to8b(rgbs[-1])
     filename = os.path.join(savedir, '{:03d}.png'.format(i))
-    imageio.imwrite(filename, rgb8)
+    imageio.imwrite(filename, img)
     print('initial image')
 
 
