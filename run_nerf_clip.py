@@ -15,6 +15,19 @@ import clip
 import kornia
 
 
+from PIL import Image
+import matplotlib.pyplot as plt
+
+def plotImage(img):
+
+    fig, axs = plt.subplots(1, 1, figsize=(10, 10))
+
+    axs[i].imshow(img)
+    axs[i].axis('off')
+
+    plt.show()
+
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 np.random.seed(0)
 DEBUG = False
@@ -627,6 +640,8 @@ def train():
             images = images[...,:3]*images[...,-1:] + (1.-images[...,-1:])
         else:
             images = images[...,:3]
+
+        plotImage(images[0])
 
     elif args.dataset_type == 'LINEMOD':
         images, poses, render_poses, hwf, K, i_split, near, far = load_LINEMOD_data(args.datadir, args.half_res, args.testskip)
