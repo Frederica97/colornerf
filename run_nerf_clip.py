@@ -253,34 +253,6 @@ def create_nerf(args):
     basedir = args.basedir
     expname = args.expname
 
-
-    # ##########################
-
-    # # Load checkpoints
-    # if args.ft_path is not None and args.ft_path!='None':
-    #     ckpts = [args.ft_path]
-    # else:
-    #     ckpts = [os.path.join(basedir, expname, f) for f in sorted(os.listdir(os.path.join(basedir, expname))) if 'tar' in f]
-
-    # print('Found ckpts', ckpts)
-    # if True:
-    # # if len(ckpts) > 0 and not args.no_reload:
-    #     # ckpt_path = ckpts[-1]
-    #     # print('Reloading from', ckpt_path)
-    #     # ckpt = torch.load(ckpt_path)
-    #     ckpt = torch.load('200000.tar')
-
-    #     start = ckpt['global_step']
-    #     # use new optimizer .............
-    #     # optimizer.load_state_dict(ckpt['optimizer_state_dict'])
-
-    #     # Load model
-    #     model.load_state_dict(ckpt['network_fn_state_dict'])
-    #     if model_fine is not None:
-    #         model_fine.load_state_dict(ckpt['network_fine_state_dict'])
-
-    # ##########################
-
     ##########################
 
     # Load checkpoints
@@ -297,7 +269,7 @@ def create_nerf(args):
 
         start = ckpt['global_step']
         # use new optimizer .............
-        #optimizer.load_state_dict(ckpt['optimizer_state_dict'])
+        optimizer.load_state_dict(ckpt['optimizer_state_dict'])
 
         # Load model
         model.load_state_dict(ckpt['network_fn_state_dict'])
