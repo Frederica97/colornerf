@@ -268,7 +268,7 @@ def create_nerf(args):
         # ckpt_path = ckpts[-1]
         # print('Reloading from', ckpt_path)
         # ckpt = torch.load(ckpt_path)
-        ckpt = torch.load(os.path.join('200000.tar'))
+        ckpt = torch.load('200000.tar')
 
         start = ckpt['global_step']
         # use new optimizer .............
