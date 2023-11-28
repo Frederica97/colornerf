@@ -253,6 +253,7 @@ def create_nerf(args):
     basedir = args.basedir
     expname = args.expname
 
+
     ##########################
 
     # Load checkpoints
@@ -558,15 +559,15 @@ def config_parser():
                         help='will take every 1/N images as LLFF test set, paper uses 8')
 
     # logging/saving options
-    parser.add_argument("--i_print",   type=int, default=15,
+    parser.add_argument("--i_print",   type=int, default=200,
                         help='frequency of console printout and metric loggin')
-    parser.add_argument("--i_img",     type=int, default=15,
+    parser.add_argument("--i_img",     type=int, default=200,
                         help='frequency of tensorboard image logging')
-    parser.add_argument("--i_weights", type=int, default=15,
+    parser.add_argument("--i_weights", type=int, default=200,
                         help='frequency of weight ckpt saving')
-    parser.add_argument("--i_testset", type=int, default=15,
+    parser.add_argument("--i_testset", type=int, default=200,
                         help='frequency of testset saving')
-    parser.add_argument("--i_video",   type=int, default=15,
+    parser.add_argument("--i_video",   type=int, default=200,
                         help='frequency of render_poses video saving')
     # clip constrain
     parser.add_argument("--description", type=str, default="A green excavator", help="the text that guides the editing/generation (Or: A photo of a XXX excavator)")
@@ -618,6 +619,7 @@ def train():
         images, poses, render_poses, hwf, i_split = load_blender_data(args.datadir, args.half_res, args.testskip)
         print('Loaded blender', images.shape, render_poses.shape, hwf, args.datadir)
         i_train, i_val, i_test = i_split
+        i_test = i_test[:2]
 
         near = 2.
         far = 6.
@@ -857,14 +859,14 @@ def train():
             }, path)
             print('Saved checkpoints at', path)
 
-        if i%args.i_video==0 and i > 0:
-            # Turn on testing mode
-            with torch.no_grad():
-                rgbs, disps = render_path(render_poses, hwf, K, args.chunk, render_kwargs_test)
-            print('Done, saving', rgbs.shape, disps.shape)
-            moviebase = os.path.join(basedir, expname, '{}_spiral_{:06d}_'.format(expname, i))
-            imageio.mimwrite(moviebase + 'rgb.mp4', to8b(rgbs), fps=30, quality=8)
-            imageio.mimwrite(moviebase + 'disp.mp4', to8b(disps / np.max(disps)), fps=30, quality=8)
+        # if i%args.i_video==0 and i > 0:
+        #     # Turn on testing mode
+        #     with torch.no_grad():
+        #         rgbs, disps = render_path(render_poses, hwf, K, args.chunk, render_kwargs_test)
+        #     print('Done, saving', rgbs.shape, disps.shape)
+        #     moviebase = os.path.join(basedir, expname, '{}_spiral_{:06d}_'.format(expname, i))
+        #     imageio.mimwrite(moviebase + 'rgb.mp4', to8b(rgbs), fps=30, quality=8)
+        #     imageio.mimwrite(moviebase + 'disp.mp4', to8b(disps / np.max(disps)), fps=30, quality=8)
 
         if i%args.i_testset==0 and i > 0:
             testsavedir = os.path.join(basedir, expname, 'testset_{:06d}'.format(i))
